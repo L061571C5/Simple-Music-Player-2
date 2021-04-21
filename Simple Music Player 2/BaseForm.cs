@@ -100,7 +100,7 @@ namespace Simple_Music_Player_2
             artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
             albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
             titleText.Text = "Title: " + title;
-            artistText.Text = artist.Contains(",") ? "Artists:" + artist : "Artist" + artist;
+            artistText.Text = artist.Contains(",") ? "Artists: " + artist : "Artist: " + artist;
             albumText.Text = "Album: " + album;
             if (file.Tag.Pictures.Length != 0)
             {
