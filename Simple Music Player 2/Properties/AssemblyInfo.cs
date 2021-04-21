@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Simple Music Player 2")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple Music Player 2: Electric Boogaloo")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Simple Music Player 2")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("716b8516-9ee1-4516-be80-383a5b334edd")]
+[assembly: Guid("3c7cc894-b10e-436d-82ae-4766ab6df5e9")]
 
 // Version information for an assembly consists of the following four values:
 //

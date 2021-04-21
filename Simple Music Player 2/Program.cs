@@ -16,7 +16,7 @@ namespace Simple_Music_Player_2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new BaseForm());
         }
     }
 }
