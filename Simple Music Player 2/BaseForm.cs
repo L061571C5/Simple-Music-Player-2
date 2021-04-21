@@ -1,15 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Threading;
 using CSCore;
 using CSCore.Codecs;
@@ -96,7 +92,7 @@ namespace Simple_Music_Player_2
             TagLib.File file = TagLib.File.Create(MusicData.queue[0]);
             TimeSpan time = waveSource.GetTime(waveSource.Length);
             var title = String.IsNullOrWhiteSpace(file.Tag.Title) ? file.Name.Split('\\')[file.Name.Split('\\').Length - 1].Split('.')[0] : file.Tag.Title;
-            var artist = file.Tag.Performers.Length == 0 ? "Artist: N/A" : file.Tag.Performers.Length > 1 ? "Artists: " + String.Join(", ", file.Tag.Performers) : "Artist: " + file.Tag.Performers[0];
+            var artist = file.Tag.Performers.Length == 0 ? "N/A" : file.Tag.Performers.Length > 1 ? String.Join(", ", file.Tag.Performers) : file.Tag.Performers[0];
             var album = String.IsNullOrWhiteSpace(file.Tag.Album) ? "N/A" : file.Tag.Album;
             double ms = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
             setPresence(title, artist, (time.TotalMilliseconds - ms), "logo", album, soundOut.PlaybackState == PlaybackState.Playing ? "playing" : "paused");
@@ -104,7 +100,7 @@ namespace Simple_Music_Player_2
             artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
             albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
             titleText.Text = "Title: " + title;
-            artistText.Text = artist;
+            artistText.Text = artist.Contains(",") ? "Artists:" + artist : "Artist" + artist;
             albumText.Text = "Album: " + album;
             if (file.Tag.Pictures.Length != 0)
             {
@@ -164,8 +160,12 @@ namespace Simple_Music_Player_2
                 }
             });
         }
-        public static void CleanupPlayback()
+        public void CleanupPlayback()
         {
+            titleText.Text = "Title";
+            artistText.Text = "Artist";
+            albumText.Text = "Album";
+            AlbumArt.Image = AlbumArt.InitialImage;
             if (soundOut != null)
             {
                 soundOut.Dispose();
@@ -194,9 +194,6 @@ namespace Simple_Music_Player_2
         private void Stop_Click(object sender, EventArgs e)
         {
             MusicData.queue.RemoveRange(0, MusicData.queue.Count);
-            titleText.Text = "Title";
-            artistText.Text = "Artist";
-            albumText.Text = "Album";
             CleanupPlayback();
         }
 
