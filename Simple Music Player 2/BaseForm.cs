@@ -14,10 +14,9 @@ using DiscordRPC;
 
 namespace Simple_Music_Player_2
 {
-
     public partial class BaseForm : Form
     {
-        public static DiscordRpcClient client = new DiscordRpcClient("834077982628511764");
+        public static DiscordRpcClient client = new DiscordRpcClient("834866728830894140");
         public static bool rpcInitialised = false;
         public static ISoundOut soundOut;
         public static IWaveSource waveSource;
@@ -71,7 +70,6 @@ namespace Simple_Music_Player_2
         public static List<string> ProcessDirectory(string targetDirectory)
         {
             List<string> lst = new List<string>();
-            // Process the list of files found in the directory.
             var fileEntries = Directory.GetFiles(targetDirectory, "*.mp3", SearchOption.AllDirectories).Union(Directory.GetFiles(targetDirectory, "*.flac", SearchOption.AllDirectories)).Union(Directory.GetFiles(targetDirectory, "*.ogg", SearchOption.AllDirectories));
             foreach (string fileName in fileEntries)
                 lst.Add(fileName);
@@ -88,35 +86,23 @@ namespace Simple_Music_Player_2
             soundOut = new WasapiOut() { Latency = 100 };
             soundOut.Initialize(waveSource);
             soundOut.Play();
-
-            TagLib.File file = TagLib.File.Create(MusicData.queue[0]);
-            TimeSpan time = waveSource.GetTime(waveSource.Length);
-            var title = String.IsNullOrWhiteSpace(file.Tag.Title) ? file.Name.Split('\\')[file.Name.Split('\\').Length - 1].Split('.')[0] : file.Tag.Title;
-            var artist = file.Tag.Performers.Length == 0 ? "N/A" : file.Tag.Performers.Length > 1 ? String.Join(", ", file.Tag.Performers) : file.Tag.Performers[0];
-            var album = String.IsNullOrWhiteSpace(file.Tag.Album) ? "N/A" : file.Tag.Album;
-            double ms = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
-            setPresence(title, artist, (time.TotalMilliseconds - ms), "logo", album, soundOut.PlaybackState == PlaybackState.Playing ? "playing" : "paused");
-            titleText.Font = new Font(titleText.Font.FontFamily, 12f, titleText.Font.Style);
-            artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
-            albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
-            titleText.Text = "Title: " + title;
-            artistText.Text = artist.Contains(",") ? "Artists: " + artist : "Artist: " + artist;
-            albumText.Text = "Album: " + album;
-            if (file.Tag.Pictures.Length != 0)
-            {
-                var bin = (byte[])(file.Tag.Pictures[0].Data.Data);
-                AlbumArt.Image = Image.FromStream(new MemoryStream(bin));
-            }
-            resizeIfNeeded();
+            soundOut.Volume = MusicData.volume;
+            timer1.Start();
+            setMetadata();
+            setLabel();
+            setPresence(MusicData.title, MusicData.artist, (MusicData.totalMs - MusicData.posMs), "logo", MusicData.album);
             while (soundOut != null && (soundOut.PlaybackState == PlaybackState.Playing || soundOut.PlaybackState == PlaybackState.Paused))
             {
-                ms = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
-                setPresence(title, artist, (time.TotalMilliseconds - ms), "logo", album, soundOut.PlaybackState == PlaybackState.Playing ? "playing" : "paused");
-                Application.DoEvents(); //let the app show the picturebox
+                MusicData.posMs = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
+                volumeTrackBar.Value = soundOut != null ? Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0)) : 100;
+                trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
+                setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album);
+                Application.DoEvents();
                 Thread.Sleep(250);
             }
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Stopped)
             {
+                MusicData.previous.Add(MusicData.queue[0]);
                 MusicData.queue.RemoveAt(0);
                 if (MusicData.queue.Count() >= 1)
                 {
@@ -125,6 +111,27 @@ namespace Simple_Music_Player_2
                     return;
                 }
             }
+        }
+        public void setMetadata()
+        {
+            TagLib.File file = TagLib.File.Create(MusicData.queue[0]);
+            MusicData.title = String.IsNullOrWhiteSpace(file.Tag.Title) ? file.Name.Split('\\')[file.Name.Split('\\').Length - 1].Split('.')[0] : file.Tag.Title;
+            MusicData.artist = file.Tag.Performers.Length == 0 ? "N/A" : file.Tag.Performers.Length > 1 ? String.Join(", ", file.Tag.Performers) : file.Tag.Performers[0];
+            MusicData.album = String.IsNullOrWhiteSpace(file.Tag.Album) ? "N/A" : file.Tag.Album;
+            MusicData.posMs = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
+            MusicData.totalMs = waveSource.GetTime(waveSource.Length).TotalMilliseconds;
+            if (file.Tag.Pictures.Length != 0)
+            {
+                var bin = (byte[])(file.Tag.Pictures[0].Data.Data);
+                AlbumArt.Image = Image.FromStream(new MemoryStream(bin));
+            }
+        }
+        public void setLabel()
+        {
+            titleText.Text = "Title: " + MusicData.title;
+            artistText.Text = MusicData.artist.Contains(",") ? "Artists: " + MusicData.artist : "Artist: " + MusicData.artist;
+            albumText.Text = "Album: " + MusicData.album;
+            resizeIfNeeded();
         }
         public void resizeIfNeeded()
         {
@@ -144,7 +151,7 @@ namespace Simple_Music_Player_2
                 Application.DoEvents();
             }
         }
-        public static void setPresence(string a, string b, double c, string d, string e, string f)
+        public static void setPresence(string a, string b, double c, string d, string e)
         {
             client.SetPresence(new RichPresence()
             {
@@ -155,7 +162,6 @@ namespace Simple_Music_Player_2
                 {
                     LargeImageKey = d,
                     LargeImageText = e,
-                    SmallImageKey = f,
 
                 }
             });
@@ -166,6 +172,12 @@ namespace Simple_Music_Player_2
             artistText.Text = "Artist";
             albumText.Text = "Album";
             AlbumArt.Image = AlbumArt.InitialImage;
+            trackTime.Text = "00:00:00 \\ 00:00:00";
+            titleText.Font = new Font(titleText.Font.FontFamily, 12f, titleText.Font.Style);
+            artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
+            albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
+            timer1.Dispose();
+            timeTrackBar.Value = 0;
             if (soundOut != null)
             {
                 soundOut.Dispose();
@@ -187,31 +199,79 @@ namespace Simple_Music_Player_2
 
         private void PlayPause_Click(object sender, EventArgs e)
         {
-            if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing) soundOut.Pause();
-            else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused) soundOut.Play();
+            if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
+            {
+                timer1.Stop();
+                soundOut.Pause();
+            }
+            else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
+            {
+                timer1.Start();
+                soundOut.Play();
+            }
+            titleText.Focus();
         }
-
         private void Stop_Click(object sender, EventArgs e)
         {
             MusicData.queue.RemoveRange(0, MusicData.queue.Count);
             CleanupPlayback();
+            titleText.Focus();
         }
 
         private void Skip_Click(object sender, EventArgs e)
         {
             CleanupPlayback();
             if (MusicData.queue.Count == 0) return;
+            MusicData.previous.Add(MusicData.queue[0]);
             MusicData.queue.RemoveAt(0);
             if (MusicData.queue.Count() >= 1)
             {
                 playMusic();
+                titleText.Focus();
                 return;
             }
+            titleText.Focus();
         }
-    }
-    static class MusicData
-    {
-        public static List<string> queue = new List<string>();
-        public static float volume = 1f;
+
+        private void Unskip_Click(object sender, EventArgs e)
+        {
+            if (MusicData.previous.Count >= 1)
+            {
+                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
+                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+                CleanupPlayback();
+                playMusic();
+                titleText.Focus();
+                return;
+            }
+            titleText.Focus();
+        }
+        private void volumeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (soundOut != null)
+            {
+                soundOut.Volume = Math.Min(1.0f, Math.Max(volumeTrackBar.Value / 100f, 0f));
+                MusicData.volume = soundOut.Volume;
+            }
+            titleText.Focus();
+        }
+
+        private void timeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (soundOut != null)
+            {
+                soundOut.Pause();
+                waveSource.Position = timeTrackBar.Value;
+                System.Threading.Thread.Sleep(0);
+                soundOut.Play();
+            }
+            titleText.Focus();
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timeTrackBar.Maximum = (int)waveSource.Length;
+            timeTrackBar.Value = (int)waveSource.Position;
+            titleText.Focus();
+        }
     }
 }
