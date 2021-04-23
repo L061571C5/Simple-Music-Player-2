@@ -90,6 +90,7 @@ namespace Simple_Music_Player_2
                 client.Initialize();
                 rpcInitialised = true;
             }
+            CleanupPlayback();
             waveSource = CodecFactory.Instance.GetCodec(MusicData.queue[0]).ToSampleSource().ToWaveSource();
             soundOut = new WasapiOut() { Latency = 100 };
             soundOut.Initialize(waveSource);
