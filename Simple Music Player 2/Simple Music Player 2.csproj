@@ -304,16 +304,13 @@
     <None Include="Resources\maximize.png" />
     <None Include="Resources\minimize.png" />
     <None Include="Resources\restore.png" />
-    <None Include="Resources\close1.png" />
     <None Include="Resources\icon.jpg" />
-    <None Include="Resources\play1.png" />
     <None Include="Resources\megaphone.png" />
     <None Include="Resources\stop.png" />
     <None Include="Resources\play.png" />
     <None Include="Resources\pause.png" />
     <None Include="Resources\unskip.png" />
     <None Include="Resources\skip.png" />
-    <None Include="Resources\icons8-pause-64.png" />
     <None Include="Resources\noAlbumArt.png" />
   </ItemGroup>
   <ItemGroup>

@@ -90,7 +90,8 @@
             // 
             // openFileToolStripMenuItem
             // 
-            this.openFileToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openFileToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.openFileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openFileToolStripMenuItem.Text = "Open File";
@@ -98,7 +99,8 @@
             // 
             // openFolderToolStripMenuItem
             // 
-            this.openFolderToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openFolderToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.openFolderToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
             this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
@@ -106,7 +108,8 @@
             // 
             // openFolderShuffledToolStripMenuItem
             // 
-            this.openFolderShuffledToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openFolderShuffledToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.openFolderShuffledToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFolderShuffledToolStripMenuItem.Name = "openFolderShuffledToolStripMenuItem";
             this.openFolderShuffledToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openFolderShuffledToolStripMenuItem.Text = "Open Folder Shuffled";
@@ -382,7 +385,7 @@
             this.Controls.Add(this.artistText);
             this.Controls.Add(this.titleText);
             this.Controls.Add(this.menuStrip1);
-            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ForeColor = System.Drawing.Color.Silver;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.On;
