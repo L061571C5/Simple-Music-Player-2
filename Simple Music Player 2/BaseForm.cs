@@ -106,7 +106,7 @@ namespace Simple_Music_Player_2
                 trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
                 setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
                 Application.DoEvents();
-                Thread.Sleep(250);
+                Thread.Sleep(325);
             }
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Stopped)
             {
