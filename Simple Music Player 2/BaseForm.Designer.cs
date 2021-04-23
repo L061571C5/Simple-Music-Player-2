@@ -1,5 +1,4 @@
-﻿
-namespace Simple_Music_Player_2
+﻿namespace Simple_Music_Player_2
 {
     partial class BaseForm
     {
@@ -58,6 +57,7 @@ namespace Simple_Music_Player_2
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -72,6 +72,7 @@ namespace Simple_Music_Player_2
             this.openFileToolStripMenuItem,
             this.openFolderToolStripMenuItem,
             this.openFolderShuffledToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -279,6 +280,7 @@ namespace Simple_Music_Player_2
             this.Controls.Add(this.artistText);
             this.Controls.Add(this.titleText);
             this.Controls.Add(this.menuStrip1);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.MainMenuStrip = this.menuStrip1;
