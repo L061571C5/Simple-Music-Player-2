@@ -128,10 +128,14 @@ namespace Simple_Music_Player_2
         }
         public void setLabel()
         {
-            titleText.Text = "Title: " + MusicData.title;
-            artistText.Text = MusicData.artist.Contains(",") ? "Artists: " + MusicData.artist : "Artist: " + MusicData.artist;
-            albumText.Text = "Album: " + MusicData.album;
+            titleText.Text = MusicData.title;
+            artistText.Text = MusicData.artist;
+            albumText.Text = MusicData.album;
+            PlayPause.Image = Properties.Resources.play;
             resizeIfNeeded();
+            relocatelabel(titleText);
+            relocatelabel(artistText);
+            relocatelabel(albumText);
         }
         public void resizeIfNeeded()
         {
@@ -168,14 +172,15 @@ namespace Simple_Music_Player_2
         }
         public void CleanupPlayback()
         {
-            titleText.Text = "Title";
-            artistText.Text = "Artist";
-            albumText.Text = "Album";
+            titleText.Text = "";
+            artistText.Text = "";
+            albumText.Text = "";
             AlbumArt.Image = AlbumArt.InitialImage;
             trackTime.Text = "00:00:00 \\ 00:00:00";
             titleText.Font = new Font(titleText.Font.FontFamily, 12f, titleText.Font.Style);
             artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
             albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
+            PlayPause.Image = Properties.Resources.pause;
             timer1.Dispose();
             timeTrackBar.Value = 0;
             if (soundOut != null)
@@ -188,6 +193,11 @@ namespace Simple_Music_Player_2
                 waveSource.Dispose();
                 waveSource = null;
             }
+        }
+        public void relocatelabel(Label l)
+        {
+            int x = (this.Width / 2) - (l.Width / 2);
+            l.Location = new Point((int)x, l.Location.Y);
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -202,11 +212,13 @@ namespace Simple_Music_Player_2
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
             {
                 timer1.Stop();
+                PlayPause.Image = Properties.Resources.pause;
                 soundOut.Pause();
             }
             else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
             {
                 timer1.Start();
+                PlayPause.Image = Properties.Resources.play;
                 soundOut.Play();
             }
             titleText.Focus();
