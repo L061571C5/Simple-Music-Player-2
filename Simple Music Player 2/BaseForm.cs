@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -20,6 +21,13 @@ namespace Simple_Music_Player_2
         public static bool rpcInitialised = false;
         public static ISoundOut soundOut;
         public static IWaveSource waveSource;
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
         public BaseForm()
         {
             InitializeComponent();
@@ -284,6 +292,71 @@ namespace Simple_Music_Player_2
             timeTrackBar.Maximum = (int)waveSource.Length;
             timeTrackBar.Value = (int)waveSource.Position;
             titleText.Focus();
+        }
+        private void formTitleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void Mainlabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void icon_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x84)
+            {
+                const int resizeArea = 10;
+                Point cursorPosition = PointToClient(new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16));
+                if (cursorPosition.X >= ClientSize.Width - resizeArea && cursorPosition.Y >= ClientSize.Height - resizeArea)
+                {
+                    m.Result = (IntPtr)17;
+                    return;
+                }
+            }
+
+            base.WndProc(ref m);
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void maximizeButton_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Maximized)
+            {
+                maximizeButton.Image = Properties.Resources.maximize;
+                WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                maximizeButton.Image = Properties.Resources.restore;
+                WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void minimizeButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
     }
 }

@@ -300,6 +300,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="music.ico" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\maximize.png" />
+    <None Include="Resources\minimize.png" />
+    <None Include="Resources\restore.png" />
+    <None Include="Resources\close1.png" />
+    <None Include="Resources\icon.jpg" />
     <None Include="Resources\play1.png" />
     <None Include="Resources\megaphone.png" />
     <None Include="Resources\stop.png" />
