@@ -124,28 +124,6 @@
     <value>132, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="minimizeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAABPSURBVDhPYxhUoA2IfwLxfwIYpKYFiDEASEIIwsQLQGp+QJioAGQ6sQCr2lEDqGwAiI0NwwAy
-        Gw6wCuIAWNVSnJBAyZPYpNwMxIMCMDAAAGzDL/rpYP5hAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="maximizeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAADBJREFUOE9j
-        GFTgLRD/JxK/AWIMAJIgFmBVO2rAqAEgQLEBoOQJkiAGY03KAwEYGAA3riuKlfPRFwAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
-  <data name="closeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAB7SURBVDhPYxhUoA2IfwLxfwIYpKYFiDEASEIIwsQLQGp+QJioAGQ6sQCrWmTBhUBsD2GCgQMQ
-        L4IwwYCgATZA/AKInaDsl1A2DBA0AARAtoI0gjCIjQxobwCys8nyAijAkG0FsUkKREIAq1qKExIoeRKb
-        lJuBeFAABgYA/5w3xVcda74AAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="AlbumArt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH

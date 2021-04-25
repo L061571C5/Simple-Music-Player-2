@@ -42,12 +42,6 @@
             this.trackTime = new System.Windows.Forms.Label();
             this.volumeTrackBar = new System.Windows.Forms.TrackBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.formTitleBar = new System.Windows.Forms.Panel();
-            this.minimizeButton = new System.Windows.Forms.Button();
-            this.maximizeButton = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.mainlabel = new System.Windows.Forms.Label();
-            this.icon = new System.Windows.Forms.PictureBox();
             this.volumePicture = new System.Windows.Forms.PictureBox();
             this.Unskip = new System.Windows.Forms.Button();
             this.AlbumArt = new System.Windows.Forms.PictureBox();
@@ -57,22 +51,24 @@
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
-            this.formTitleBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.icon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AlbumArt)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.menuStrip1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.menuStrip1.AutoSize = false;
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(550, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -202,91 +198,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // formTitleBar
-            // 
-            this.formTitleBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.formTitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.formTitleBar.Controls.Add(this.minimizeButton);
-            this.formTitleBar.Controls.Add(this.maximizeButton);
-            this.formTitleBar.Controls.Add(this.closeButton);
-            this.formTitleBar.Controls.Add(this.mainlabel);
-            this.formTitleBar.Controls.Add(this.icon);
-            this.formTitleBar.Location = new System.Drawing.Point(0, 0);
-            this.formTitleBar.Name = "formTitleBar";
-            this.formTitleBar.Size = new System.Drawing.Size(550, 26);
-            this.formTitleBar.TabIndex = 14;
-            this.formTitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formTitleBar_MouseMove);
-            // 
-            // minimizeButton
-            // 
-            this.minimizeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.minimizeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.minimizeButton.FlatAppearance.BorderSize = 0;
-            this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.minimizeButton.ForeColor = System.Drawing.Color.Gray;
-            this.minimizeButton.Image = ((System.Drawing.Image)(resources.GetObject("minimizeButton.Image")));
-            this.minimizeButton.Location = new System.Drawing.Point(458, 0);
-            this.minimizeButton.Name = "minimizeButton";
-            this.minimizeButton.Size = new System.Drawing.Size(33, 26);
-            this.minimizeButton.TabIndex = 15;
-            this.minimizeButton.UseVisualStyleBackColor = true;
-            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
-            // 
-            // maximizeButton
-            // 
-            this.maximizeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.maximizeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.maximizeButton.FlatAppearance.BorderSize = 0;
-            this.maximizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.maximizeButton.ForeColor = System.Drawing.Color.Gray;
-            this.maximizeButton.Image = ((System.Drawing.Image)(resources.GetObject("maximizeButton.Image")));
-            this.maximizeButton.Location = new System.Drawing.Point(488, 0);
-            this.maximizeButton.Name = "maximizeButton";
-            this.maximizeButton.Size = new System.Drawing.Size(33, 26);
-            this.maximizeButton.TabIndex = 17;
-            this.maximizeButton.UseVisualStyleBackColor = true;
-            this.maximizeButton.Click += new System.EventHandler(this.maximizeButton_Click);
-            // 
-            // closeButton
-            // 
-            this.closeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.closeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.closeButton.FlatAppearance.BorderSize = 0;
-            this.closeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
-            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeButton.ForeColor = System.Drawing.Color.Gray;
-            this.closeButton.Image = ((System.Drawing.Image)(resources.GetObject("closeButton.Image")));
-            this.closeButton.Location = new System.Drawing.Point(518, 0);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(33, 26);
-            this.closeButton.TabIndex = 18;
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // mainlabel
-            // 
-            this.mainlabel.AutoSize = true;
-            this.mainlabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.mainlabel.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainlabel.ForeColor = System.Drawing.Color.Silver;
-            this.mainlabel.Location = new System.Drawing.Point(32, 4);
-            this.mainlabel.Name = "mainlabel";
-            this.mainlabel.Size = new System.Drawing.Size(143, 17);
-            this.mainlabel.TabIndex = 15;
-            this.mainlabel.Text = "Simple Music Player 2";
-            this.mainlabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Mainlabel_MouseMove);
-            // 
-            // icon
-            // 
-            this.icon.Image = global::Simple_Music_Player_2.Properties.Resources.icon;
-            this.icon.Location = new System.Drawing.Point(10, 5);
-            this.icon.Name = "icon";
-            this.icon.Size = new System.Drawing.Size(16, 16);
-            this.icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.icon.TabIndex = 15;
-            this.icon.TabStop = false;
-            this.icon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.icon_MouseMove);
-            // 
             // volumePicture
             // 
             this.volumePicture.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -371,7 +282,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(550, 600);
-            this.Controls.Add(this.formTitleBar);
             this.Controls.Add(this.volumePicture);
             this.Controls.Add(this.volumeTrackBar);
             this.Controls.Add(this.Unskip);
@@ -386,7 +296,6 @@
             this.Controls.Add(this.titleText);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.Color.Silver;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.MainMenuStrip = this.menuStrip1;
@@ -398,9 +307,6 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).EndInit();
-            this.formTitleBar.ResumeLayout(false);
-            this.formTitleBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.icon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AlbumArt)).EndInit();
             this.ResumeLayout(false);
@@ -427,13 +333,7 @@
         private System.Windows.Forms.Button Unskip;
         private System.Windows.Forms.TrackBar volumeTrackBar;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Panel formTitleBar;
-        private System.Windows.Forms.PictureBox icon;
-        private System.Windows.Forms.Label mainlabel;
         private System.Windows.Forms.PictureBox volumePicture;
-        private System.Windows.Forms.Button minimizeButton;
-        private System.Windows.Forms.Button maximizeButton;
-        private System.Windows.Forms.Button closeButton;
     }
 }
 
