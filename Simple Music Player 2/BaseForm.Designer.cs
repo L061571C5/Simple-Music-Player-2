@@ -68,8 +68,8 @@
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(550, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(733, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -81,7 +81,7 @@
             this.openFolderShuffledToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openFileToolStripMenuItem
@@ -89,7 +89,7 @@
             this.openFileToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.openFileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.openFileToolStripMenuItem.Text = "Open File";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
@@ -98,7 +98,7 @@
             this.openFolderToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.openFolderToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
@@ -107,7 +107,7 @@
             this.openFolderShuffledToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.openFolderShuffledToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFolderShuffledToolStripMenuItem.Name = "openFolderShuffledToolStripMenuItem";
-            this.openFolderShuffledToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openFolderShuffledToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.openFolderShuffledToolStripMenuItem.Text = "Open Folder Shuffled";
             this.openFolderShuffledToolStripMenuItem.Click += new System.EventHandler(this.openFolderShuffledToolStripMenuItem_Click);
             // 
@@ -117,11 +117,12 @@
             this.titleText.AutoSize = true;
             this.titleText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleText.ForeColor = System.Drawing.Color.DarkGray;
-            this.titleText.Location = new System.Drawing.Point(259, 62);
-            this.titleText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.titleText.Location = new System.Drawing.Point(345, 76);
+            this.titleText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.titleText.MaximumSize = new System.Drawing.Size(415, 30);
             this.titleText.Name = "titleText";
-            this.titleText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.titleText.Size = new System.Drawing.Size(0, 24);
+            this.titleText.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.titleText.Size = new System.Drawing.Size(0, 30);
             this.titleText.TabIndex = 1;
             this.titleText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -131,11 +132,12 @@
             this.artistText.AutoSize = true;
             this.artistText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.artistText.ForeColor = System.Drawing.Color.DarkGray;
-            this.artistText.Location = new System.Drawing.Point(259, 101);
-            this.artistText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.artistText.Location = new System.Drawing.Point(345, 124);
+            this.artistText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.artistText.MaximumSize = new System.Drawing.Size(415, 30);
             this.artistText.Name = "artistText";
-            this.artistText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.artistText.Size = new System.Drawing.Size(0, 24);
+            this.artistText.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.artistText.Size = new System.Drawing.Size(0, 30);
             this.artistText.TabIndex = 2;
             this.artistText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -143,10 +145,11 @@
             // 
             this.timeTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.timeTrackBar.LargeChange = 1;
-            this.timeTrackBar.Location = new System.Drawing.Point(20, 431);
+            this.timeTrackBar.Location = new System.Drawing.Point(27, 530);
+            this.timeTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.timeTrackBar.Maximum = 1000;
             this.timeTrackBar.Name = "timeTrackBar";
-            this.timeTrackBar.Size = new System.Drawing.Size(510, 45);
+            this.timeTrackBar.Size = new System.Drawing.Size(680, 56);
             this.timeTrackBar.TabIndex = 4;
             this.timeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.timeTrackBar.ValueChanged += new System.EventHandler(this.timeTrackBar_ValueChanged);
@@ -157,11 +160,12 @@
             this.albumText.AutoSize = true;
             this.albumText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.albumText.ForeColor = System.Drawing.Color.DarkGray;
-            this.albumText.Location = new System.Drawing.Point(259, 140);
-            this.albumText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.albumText.Location = new System.Drawing.Point(345, 172);
+            this.albumText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.albumText.MaximumSize = new System.Drawing.Size(415, 30);
             this.albumText.Name = "albumText";
-            this.albumText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.albumText.Size = new System.Drawing.Size(0, 24);
+            this.albumText.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.albumText.Size = new System.Drawing.Size(0, 30);
             this.albumText.TabIndex = 9;
             this.albumText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -172,11 +176,12 @@
             this.trackTime.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackTime.ForeColor = System.Drawing.Color.DarkGray;
             this.trackTime.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.trackTime.Location = new System.Drawing.Point(213, 404);
-            this.trackTime.MaximumSize = new System.Drawing.Size(332, 0);
+            this.trackTime.Location = new System.Drawing.Point(284, 497);
+            this.trackTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.trackTime.MaximumSize = new System.Drawing.Size(443, 0);
             this.trackTime.Name = "trackTime";
-            this.trackTime.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.trackTime.Size = new System.Drawing.Size(135, 24);
+            this.trackTime.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.trackTime.Size = new System.Drawing.Size(168, 30);
             this.trackTime.TabIndex = 10;
             this.trackTime.Text = "00:00:00 \\ 00:00:00";
             this.trackTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -186,10 +191,11 @@
             this.volumeTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.volumeTrackBar.CausesValidation = false;
             this.volumeTrackBar.LargeChange = 1;
-            this.volumeTrackBar.Location = new System.Drawing.Point(20, 501);
+            this.volumeTrackBar.Location = new System.Drawing.Point(27, 617);
+            this.volumeTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.volumeTrackBar.Maximum = 100;
             this.volumeTrackBar.Name = "volumeTrackBar";
-            this.volumeTrackBar.Size = new System.Drawing.Size(126, 45);
+            this.volumeTrackBar.Size = new System.Drawing.Size(168, 56);
             this.volumeTrackBar.TabIndex = 12;
             this.volumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.volumeTrackBar.ValueChanged += new System.EventHandler(this.volumeTrackBar_ValueChanged);
@@ -205,9 +211,10 @@
             this.volumePicture.Cursor = System.Windows.Forms.Cursors.Default;
             this.volumePicture.Image = global::Simple_Music_Player_2.Properties.Resources.megaphone;
             this.volumePicture.InitialImage = global::Simple_Music_Player_2.Properties.Resources.megaphone;
-            this.volumePicture.Location = new System.Drawing.Point(71, 470);
+            this.volumePicture.Location = new System.Drawing.Point(95, 578);
+            this.volumePicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.volumePicture.Name = "volumePicture";
-            this.volumePicture.Size = new System.Drawing.Size(24, 24);
+            this.volumePicture.Size = new System.Drawing.Size(32, 30);
             this.volumePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.volumePicture.TabIndex = 13;
             this.volumePicture.TabStop = false;
@@ -218,9 +225,10 @@
             this.Unskip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Unskip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.Unskip.Image = global::Simple_Music_Player_2.Properties.Resources.unskip;
-            this.Unskip.Location = new System.Drawing.Point(152, 482);
+            this.Unskip.Location = new System.Drawing.Point(203, 593);
+            this.Unskip.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Unskip.Name = "Unskip";
-            this.Unskip.Size = new System.Drawing.Size(64, 64);
+            this.Unskip.Size = new System.Drawing.Size(85, 79);
             this.Unskip.TabIndex = 11;
             this.Unskip.UseVisualStyleBackColor = true;
             this.Unskip.Click += new System.EventHandler(this.Unskip_Click);
@@ -230,9 +238,10 @@
             this.AlbumArt.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AlbumArt.Image = ((System.Drawing.Image)(resources.GetObject("AlbumArt.Image")));
             this.AlbumArt.InitialImage = ((System.Drawing.Image)(resources.GetObject("AlbumArt.InitialImage")));
-            this.AlbumArt.Location = new System.Drawing.Point(183, 184);
+            this.AlbumArt.Location = new System.Drawing.Point(244, 226);
+            this.AlbumArt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AlbumArt.Name = "AlbumArt";
-            this.AlbumArt.Size = new System.Drawing.Size(200, 200);
+            this.AlbumArt.Size = new System.Drawing.Size(267, 246);
             this.AlbumArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.AlbumArt.TabIndex = 7;
             this.AlbumArt.TabStop = false;
@@ -243,9 +252,10 @@
             this.Skip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Skip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.Skip.Image = global::Simple_Music_Player_2.Properties.Resources.skip;
-            this.Skip.Location = new System.Drawing.Point(340, 482);
+            this.Skip.Location = new System.Drawing.Point(453, 593);
+            this.Skip.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Skip.Name = "Skip";
-            this.Skip.Size = new System.Drawing.Size(64, 64);
+            this.Skip.Size = new System.Drawing.Size(85, 79);
             this.Skip.TabIndex = 6;
             this.Skip.UseVisualStyleBackColor = true;
             this.Skip.Click += new System.EventHandler(this.Skip_Click);
@@ -256,9 +266,10 @@
             this.Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Stop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.Stop.Image = global::Simple_Music_Player_2.Properties.Resources.stop;
-            this.Stop.Location = new System.Drawing.Point(436, 482);
+            this.Stop.Location = new System.Drawing.Point(581, 593);
+            this.Stop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Stop.Name = "Stop";
-            this.Stop.Size = new System.Drawing.Size(64, 64);
+            this.Stop.Size = new System.Drawing.Size(85, 79);
             this.Stop.TabIndex = 5;
             this.Stop.UseVisualStyleBackColor = true;
             this.Stop.Click += new System.EventHandler(this.Stop_Click);
@@ -269,19 +280,20 @@
             this.PlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PlayPause.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.PlayPause.Image = global::Simple_Music_Player_2.Properties.Resources.pause;
-            this.PlayPause.Location = new System.Drawing.Point(251, 482);
+            this.PlayPause.Location = new System.Drawing.Point(335, 593);
+            this.PlayPause.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PlayPause.Name = "PlayPause";
-            this.PlayPause.Size = new System.Drawing.Size(64, 64);
+            this.PlayPause.Size = new System.Drawing.Size(85, 79);
             this.PlayPause.TabIndex = 4;
             this.PlayPause.UseVisualStyleBackColor = true;
             this.PlayPause.Click += new System.EventHandler(this.PlayPause_Click);
             // 
             // BaseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ClientSize = new System.Drawing.Size(550, 600);
+            this.ClientSize = new System.Drawing.Size(733, 738);
             this.Controls.Add(this.volumePicture);
             this.Controls.Add(this.volumeTrackBar);
             this.Controls.Add(this.Unskip);
@@ -299,7 +311,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(550, 600);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(727, 728);
             this.Name = "BaseForm";
             this.Text = "Music Player 2";
             this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
