@@ -102,6 +102,7 @@ namespace Simple_Music_Player_2
             MusicData.previous.Add(MusicData.queue[0]);
             MusicData.queue.RemoveAt(0);
             setPresence(MusicData.title, MusicData.artist, (MusicData.totalMs - MusicData.posMs), "logo", MusicData.album, true);
+            setLabel();
             while (soundOut != null && (soundOut.PlaybackState == PlaybackState.Playing || soundOut.PlaybackState == PlaybackState.Paused))
             {
                 MusicData.posMs = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
