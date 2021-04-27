@@ -38,7 +38,7 @@ namespace Simple_Music_Player_2
             OpenFileDialog dialog = new OpenFileDialog();
 
             dialog.InitialDirectory = "c:\\";
-            dialog.Filter = "Music files (*.mp3, *.flac)|*.mp3;*.flac";
+            dialog.Filter = "Music files (*.mp3, *.flac, *.ogg)|*.mp3;*.flac;*.ogg";
             dialog.FilterIndex = 0;
             dialog.RestoreDirectory = true;
 
@@ -58,8 +58,8 @@ namespace Simple_Music_Player_2
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 string selectedFolderPath = dialog.FileName;
-                MusicData.queue = ProcessDirectory(selectedFolderPath);
-                playMusic();
+                MusicData.queue.AddRange(ProcessDirectory(selectedFolderPath));
+                if (soundOut == null) playMusic();
             }
         }
         private void openFolderShuffledToolStripMenuItem_Click(object sender, EventArgs e)
@@ -71,8 +71,8 @@ namespace Simple_Music_Player_2
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 string selectedFolderPath = dialog.FileName;
-                MusicData.queue = (ProcessDirectory(selectedFolderPath)).OrderBy(x => Guid.NewGuid()).ToList();
-                playMusic();
+                MusicData.queue.AddRange((ProcessDirectory(selectedFolderPath)).OrderBy(x => Guid.NewGuid()).ToList());
+                if (soundOut == null) playMusic();
             }
         }
         public static List<string> ProcessDirectory(string targetDirectory)
@@ -107,7 +107,7 @@ namespace Simple_Music_Player_2
                 trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
                 setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
                 Application.DoEvents();
-                Thread.Sleep(325);
+                Thread.Sleep(250);
             }
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Stopped)
             {
@@ -166,182 +166,164 @@ namespace Simple_Music_Player_2
         }
         public static void setPresence(string a, string b, double c, string d, string e, bool f)
         {
-            client.SetPresence(new RichPresence()
+            if (client != null)
             {
-                Details = a,
-                State = "By: " + b,
-                Timestamps = f == true? Timestamps.FromTimeSpan(c / 1000) : null,
-                Assets = new Assets()
-            {
-                LargeImageKey = d,
-                LargeImageText = e,
+                client.SetPresence(new RichPresence()
+                {
+                    Details = a,
+                    State = "By: " + b,
+                    Timestamps = f == true ? Timestamps.FromTimeSpan(c / 1000) : null,
+                    Assets = new Assets()
+                    {
+                        LargeImageKey = d,
+                        LargeImageText = e,
 
+                    }
+                });
             }
-            });
         }
-    public void CleanupPlayback()
-    {
-        titleText.Text = "";
-        artistText.Text = "";
-        albumText.Text = "";
-        AlbumArt.Image = AlbumArt.InitialImage;
-        trackTime.Text = "00:00:00 \\ 00:00:00";
-        titleText.Font = new Font(titleText.Font.FontFamily, 12f, titleText.Font.Style);
-        artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
-        albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
-        PlayPause.Image = Properties.Resources.pause;
-        timer1.Dispose();
-        timeTrackBar.Value = 0;
-        if (soundOut != null)
+        public void CleanupPlayback()
         {
-            soundOut.Dispose();
-            soundOut = null;
-        }
-        if (waveSource != null)
-        {
-            waveSource.Dispose();
-            waveSource = null;
-        }
-    }
-    public void relocatelabel(Label l)
-    {
-        int x = (this.Width / 2) - (l.Width / 2);
-        l.Location = new Point((int)x, l.Location.Y);
-    }
-    protected override void OnFormClosing(FormClosingEventArgs e)
-    {
-        base.OnFormClosing(e);
-        client.Dispose();
-        client = null;
-        CleanupPlayback();
-    }
-
-    private void PlayPause_Click(object sender, EventArgs e)
-    {
-        if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
-        {
-            timer1.Stop();
+            titleText.Text = "";
+            artistText.Text = "";
+            albumText.Text = "";
+            AlbumArt.Image = AlbumArt.InitialImage;
+            trackTime.Text = "00:00:00 \\ 00:00:00";
+            titleText.Font = new Font(titleText.Font.FontFamily, 12f, titleText.Font.Style);
+            artistText.Font = new Font(artistText.Font.FontFamily, 12f, artistText.Font.Style);
+            albumText.Font = new Font(albumText.Font.FontFamily, 12f, albumText.Font.Style);
             PlayPause.Image = Properties.Resources.pause;
-            soundOut.Pause();
+            timer1.Dispose();
+            timeTrackBar.Value = 0;
+            if (soundOut != null)
+            {
+                soundOut.Dispose();
+                soundOut = null;
+            }
+            if (waveSource != null)
+            {
+                waveSource.Dispose();
+                waveSource = null;
+            }
         }
-        else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
+        public void relocatelabel(Label l)
         {
-            timer1.Start();
-            PlayPause.Image = Properties.Resources.play;
-            soundOut.Play();
+            int x = (this.Width / 2) - (l.Width / 2);
+            l.Location = new Point((int)x, l.Location.Y);
         }
-        titleText.Focus();
-    }
-    private void Stop_Click(object sender, EventArgs e)
-    {
-        MusicData.queue.RemoveRange(0, MusicData.queue.Count);
-        CleanupPlayback();
-        titleText.Focus();
-    }
-
-    private void Skip_Click(object sender, EventArgs e)
-    {
-        CleanupPlayback();
-        if (MusicData.queue.Count == 0) return;
-        MusicData.previous.Add(MusicData.queue[0]);
-        MusicData.queue.RemoveAt(0);
-        if (MusicData.queue.Count() >= 1)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            playMusic();
-            titleText.Focus();
-            return;
-        }
-        titleText.Focus();
-    }
-
-    private void Unskip_Click(object sender, EventArgs e)
-    {
-        if (MusicData.previous.Count >= 1)
-        {
-            MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
-            MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+            base.OnFormClosing(e);
+            client.Dispose();
+            client = null;
             CleanupPlayback();
-            playMusic();
+        }
+        private void PlayPause_Click(object sender, EventArgs e)
+        {
+            if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
+            {
+                timer1.Stop();
+                PlayPause.Image = Properties.Resources.pause;
+                soundOut.Pause();
+            }
+            else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
+            {
+                timer1.Start();
+                PlayPause.Image = Properties.Resources.play;
+                soundOut.Play();
+            }
             titleText.Focus();
-            return;
         }
-        titleText.Focus();
-    }
-    private void volumeTrackBar_ValueChanged(object sender, EventArgs e)
-    {
-        if (soundOut != null)
+        private void Stop_Click(object sender, EventArgs e)
         {
-            soundOut.Volume = Math.Min(1.0f, Math.Max(volumeTrackBar.Value / 100f, 0f));
-            MusicData.volume = soundOut.Volume;
+            MusicData.queue.RemoveRange(0, MusicData.queue.Count);
+            CleanupPlayback();
+            titleText.Focus();
         }
-        titleText.Focus();
-    }
 
-    private void timeTrackBar_ValueChanged(object sender, EventArgs e)
-    {
-        if (soundOut != null)
+        private void Skip_Click(object sender, EventArgs e)
         {
-            soundOut.Pause();
-            waveSource.Position = timeTrackBar.Value;
-            System.Threading.Thread.Sleep(0);
-            soundOut.Play();
+            CleanupPlayback();
+            if (MusicData.queue.Count == 0) return;
+            MusicData.previous.Add(MusicData.queue[0]);
+            MusicData.queue.RemoveAt(0);
+            if (MusicData.queue.Count() >= 1)
+            {
+                playMusic();
+                titleText.Focus();
+                return;
+            }
+            titleText.Focus();
         }
-        titleText.Focus();
-    }
-    private void timer1_Tick(object sender, EventArgs e)
-    {
-        timeTrackBar.Maximum = (int)waveSource.Length;
-        timeTrackBar.Value = (int)waveSource.Position;
-        titleText.Focus();
-    }
-    private void formTitleBar_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
-        {
-            ReleaseCapture();
-            SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-        }
-    }
 
-    private void Mainlabel_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
+        private void Unskip_Click(object sender, EventArgs e)
         {
-            ReleaseCapture();
-            SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            if (MusicData.previous.Count >= 1)
+            {
+                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
+                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+                CleanupPlayback();
+                playMusic();
+                titleText.Focus();
+                return;
+            }
+            titleText.Focus();
         }
-    }
+        private void volumeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (soundOut != null)
+            {
+                soundOut.Volume = Math.Min(1.0f, Math.Max(volumeTrackBar.Value / 100f, 0f));
+                MusicData.volume = soundOut.Volume;
+            }
+            titleText.Focus();
+        }
 
-    private void icon_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
+        private void timeTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            ReleaseCapture();
-            SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            if (soundOut != null)
+            {
+                soundOut.Pause();
+                waveSource.Position = timeTrackBar.Value;
+                System.Threading.Thread.Sleep(0);
+                soundOut.Play();
+            }
+            titleText.Focus();
         }
-    }
-    private void closeButton_Click(object sender, EventArgs e)
-    {
-        Application.Exit();
-    }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timeTrackBar.Maximum = (int)waveSource.Length;
+            timeTrackBar.Value = (int)waveSource.Position;
+            titleText.Focus();
+        }
 
-    private void maximizeButton_Click(object sender, EventArgs e)
-    {
-        if (WindowState == FormWindowState.Maximized)
+        private void viewQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            maximizeButton.Image = Properties.Resources.maximize;
-            WindowState = FormWindowState.Normal;
+            if (MusicData.queue.Count != 0)
+            {
+                Thread queueThread = new Thread(new ThreadStart(RunQueue));
+                queueThread.IsBackground = true;
+                queueThread.Name = "Queue";
+                queueThread.Start();
+            }
+            else
+            {
+                MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-        else
+        static void RunQueue()
         {
-            maximizeButton.Image = Properties.Resources.restore;
-            WindowState = FormWindowState.Maximized;
+            try
+            {
+                Application.Run(new QueueForm());
+            }
+            catch { }
         }
-    }
 
-    private void minimizeButton_Click(object sender, EventArgs e)
-    {
-        WindowState = FormWindowState.Minimized;
+        private void shuffleQueueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MusicData.queue = MusicData.queue.OrderBy(x => Guid.NewGuid()).ToList();
+            MessageBox.Show("The queue has been shuffled!", "Shuffler", MessageBoxButtons.OK);
+        }
     }
-}
 }
