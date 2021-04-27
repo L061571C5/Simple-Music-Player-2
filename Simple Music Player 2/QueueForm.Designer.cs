@@ -66,13 +66,13 @@ namespace Simple_Music_Player_2
             this.queueListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.queueListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.queueListView.BackColor = System.Drawing.SystemColors.Control;
             this.queueListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             TrackNumber,
             Title,
             Artist,
             Album});
-            this.queueListView.ForeColor = System.Drawing.Color.DarkGray;
+            this.queueListView.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.queueListView.GridLines = true;
             this.queueListView.HideSelection = false;
             this.queueListView.Location = new System.Drawing.Point(0, 0);
