@@ -29,13 +29,37 @@ namespace Simple_Music_Player_2
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ColumnHeader TrackNumber;
+            System.Windows.Forms.ColumnHeader Title;
+            System.Windows.Forms.ColumnHeader Artist;
+            System.Windows.Forms.ColumnHeader Album;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueueForm));
             this.queueListView = new System.Windows.Forms.ListView();
-            this.TrackNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            TrackNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
+            // 
+            // TrackNumber
+            // 
+            TrackNumber.Text = "#";
+            TrackNumber.Width = 50;
+            // 
+            // Title
+            // 
+            Title.Text = "Title";
+            Title.Width = 300;
+            // 
+            // Artist
+            // 
+            Artist.Text = "Artist";
+            Artist.Width = 200;
+            // 
+            // Album
+            // 
+            Album.Text = "Album";
+            Album.Width = 300;
             // 
             // queueListView
             // 
@@ -44,10 +68,10 @@ namespace Simple_Music_Player_2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.queueListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.queueListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.TrackNumber,
-            this.Title,
-            this.Artist,
-            this.Album});
+            TrackNumber,
+            Title,
+            Artist,
+            Album});
             this.queueListView.ForeColor = System.Drawing.Color.DarkGray;
             this.queueListView.GridLines = true;
             this.queueListView.HideSelection = false;
@@ -57,25 +81,7 @@ namespace Simple_Music_Player_2
             this.queueListView.TabIndex = 0;
             this.queueListView.UseCompatibleStateImageBehavior = false;
             this.queueListView.View = System.Windows.Forms.View.Details;
-            // 
-            // TrackNumber
-            // 
-            this.TrackNumber.Text = "#";
-            // 
-            // Title
-            // 
-            this.Title.Text = "Title";
-            this.Title.Width = 334;
-            // 
-            // Artist
-            // 
-            this.Artist.Text = "Artist";
-            this.Artist.Width = 100;
-            // 
-            // Album
-            // 
-            this.Album.Text = "Album";
-            this.Album.Width = 200;
+            this.queueListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.queueListView_RetrieveVirtualItem);
             // 
             // QueueForm
             // 
@@ -94,9 +100,5 @@ namespace Simple_Music_Player_2
         #endregion
 
         private System.Windows.Forms.ListView queueListView;
-        private System.Windows.Forms.ColumnHeader Title;
-        private System.Windows.Forms.ColumnHeader Artist;
-        private System.Windows.Forms.ColumnHeader Album;
-        private System.Windows.Forms.ColumnHeader TrackNumber;
     }
 }

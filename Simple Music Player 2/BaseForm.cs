@@ -99,6 +99,8 @@ namespace Simple_Music_Player_2
             timer1.Start();
             setMetadata();
             setLabel();
+            MusicData.previous.Add(MusicData.queue[0]);
+            MusicData.queue.RemoveAt(0);
             setPresence(MusicData.title, MusicData.artist, (MusicData.totalMs - MusicData.posMs), "logo", MusicData.album, true);
             while (soundOut != null && (soundOut.PlaybackState == PlaybackState.Playing || soundOut.PlaybackState == PlaybackState.Paused))
             {
@@ -111,8 +113,6 @@ namespace Simple_Music_Player_2
             }
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Stopped)
             {
-                MusicData.previous.Add(MusicData.queue[0]);
-                MusicData.queue.RemoveAt(0);
                 if (MusicData.queue.Count() >= 1)
                 {
                     CleanupPlayback();
@@ -245,8 +245,6 @@ namespace Simple_Music_Player_2
         {
             CleanupPlayback();
             if (MusicData.queue.Count == 0) return;
-            MusicData.previous.Add(MusicData.queue[0]);
-            MusicData.queue.RemoveAt(0);
             if (MusicData.queue.Count() >= 1)
             {
                 playMusic();
@@ -313,11 +311,11 @@ namespace Simple_Music_Player_2
         }
         static void RunQueue()
         {
-            try
+           try
             {
                 Application.Run(new QueueForm());
-            }
-            catch { }
+           }
+            catch (ArgumentOutOfRangeException){ }
         }
 
         private void shuffleQueueToolStripMenuItem_Click(object sender, EventArgs e)
