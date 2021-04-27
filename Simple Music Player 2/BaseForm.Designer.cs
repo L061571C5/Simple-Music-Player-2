@@ -128,14 +128,14 @@
             // viewQueueToolStripMenuItem
             // 
             this.viewQueueToolStripMenuItem.Name = "viewQueueToolStripMenuItem";
-            this.viewQueueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewQueueToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.viewQueueToolStripMenuItem.Text = "View Queue";
             this.viewQueueToolStripMenuItem.Click += new System.EventHandler(this.viewQueueToolStripMenuItem_Click);
             // 
             // shuffleQueueToolStripMenuItem
             // 
             this.shuffleQueueToolStripMenuItem.Name = "shuffleQueueToolStripMenuItem";
-            this.shuffleQueueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shuffleQueueToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.shuffleQueueToolStripMenuItem.Text = "Shuffle Queue";
             this.shuffleQueueToolStripMenuItem.Click += new System.EventHandler(this.shuffleQueueToolStripMenuItem_Click);
             // 
@@ -145,8 +145,8 @@
             this.titleText.AutoSize = true;
             this.titleText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleText.ForeColor = System.Drawing.Color.DarkGray;
-            this.titleText.Location = new System.Drawing.Point(263, 67);
-            this.titleText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.titleText.Location = new System.Drawing.Point(263, 52);
+            this.titleText.MaximumSize = new System.Drawing.Size(400, 24);
             this.titleText.Name = "titleText";
             this.titleText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.titleText.Size = new System.Drawing.Size(0, 24);
@@ -159,8 +159,8 @@
             this.artistText.AutoSize = true;
             this.artistText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.artistText.ForeColor = System.Drawing.Color.DarkGray;
-            this.artistText.Location = new System.Drawing.Point(263, 106);
-            this.artistText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.artistText.Location = new System.Drawing.Point(263, 96);
+            this.artistText.MaximumSize = new System.Drawing.Size(400, 24);
             this.artistText.Name = "artistText";
             this.artistText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.artistText.Size = new System.Drawing.Size(0, 24);
@@ -185,8 +185,8 @@
             this.albumText.AutoSize = true;
             this.albumText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.albumText.ForeColor = System.Drawing.Color.DarkGray;
-            this.albumText.Location = new System.Drawing.Point(263, 145);
-            this.albumText.MaximumSize = new System.Drawing.Size(311, 24);
+            this.albumText.Location = new System.Drawing.Point(263, 140);
+            this.albumText.MaximumSize = new System.Drawing.Size(400, 24);
             this.albumText.Name = "albumText";
             this.albumText.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.albumText.Size = new System.Drawing.Size(0, 24);

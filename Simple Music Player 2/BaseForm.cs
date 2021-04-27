@@ -256,10 +256,10 @@ namespace Simple_Music_Player_2
 
         private void Unskip_Click(object sender, EventArgs e)
         {
-            if (MusicData.previous.Count >= 1)
+            if (MusicData.previous.Count >= 2)
             {
-                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
-                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 2]);
+                MusicData.previous.RemoveAt(MusicData.previous.Count - 2);
                 CleanupPlayback();
                 playMusic();
                 titleText.Focus();
