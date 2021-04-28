@@ -176,6 +176,7 @@
             this.timeTrackBar.Name = "timeTrackBar";
             this.timeTrackBar.Size = new System.Drawing.Size(510, 45);
             this.timeTrackBar.TabIndex = 4;
+            this.timeTrackBar.TabStop = false;
             this.timeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.timeTrackBar.ValueChanged += new System.EventHandler(this.timeTrackBar_ValueChanged);
             // 
@@ -219,6 +220,7 @@
             this.volumeTrackBar.Name = "volumeTrackBar";
             this.volumeTrackBar.Size = new System.Drawing.Size(126, 45);
             this.volumeTrackBar.TabIndex = 12;
+            this.volumeTrackBar.TabStop = false;
             this.volumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.volumeTrackBar.ValueChanged += new System.EventHandler(this.volumeTrackBar_ValueChanged);
             // 
@@ -250,8 +252,9 @@
             this.Unskip.Name = "Unskip";
             this.Unskip.Size = new System.Drawing.Size(64, 64);
             this.Unskip.TabIndex = 11;
+            this.Unskip.TabStop = false;
             this.Unskip.UseVisualStyleBackColor = true;
-            this.Unskip.Click += new System.EventHandler(this.Unskip_Click);
+            this.Unskip.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Unskip_Click);
             // 
             // AlbumArt
             // 
@@ -275,8 +278,9 @@
             this.Skip.Name = "Skip";
             this.Skip.Size = new System.Drawing.Size(64, 64);
             this.Skip.TabIndex = 6;
+            this.Skip.TabStop = false;
             this.Skip.UseVisualStyleBackColor = true;
-            this.Skip.Click += new System.EventHandler(this.Skip_Click);
+            this.Skip.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Skip_Click);
             // 
             // Stop
             // 
@@ -288,8 +292,9 @@
             this.Stop.Name = "Stop";
             this.Stop.Size = new System.Drawing.Size(64, 64);
             this.Stop.TabIndex = 5;
+            this.Stop.TabStop = false;
             this.Stop.UseVisualStyleBackColor = true;
-            this.Stop.Click += new System.EventHandler(this.Stop_Click);
+            this.Stop.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Stop_Click);
             // 
             // PlayPause
             // 
@@ -301,8 +306,9 @@
             this.PlayPause.Name = "PlayPause";
             this.PlayPause.Size = new System.Drawing.Size(64, 64);
             this.PlayPause.TabIndex = 4;
+            this.PlayPause.TabStop = false;
             this.PlayPause.UseVisualStyleBackColor = true;
-            this.PlayPause.Click += new System.EventHandler(this.PlayPause_Click);
+            this.PlayPause.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlayPause_Click);
             // 
             // BaseForm
             // 

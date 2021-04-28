@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -11,6 +12,8 @@ using System.Threading;
 using CSCore;
 using CSCore.Codecs;
 using CSCore.SoundOut;
+using CSCore.Streams.Effects;
+using CSCore.Streams;
 using DiscordRPC;
 
 namespace Simple_Music_Player_2
@@ -23,7 +26,6 @@ namespace Simple_Music_Player_2
         public static IWaveSource waveSource;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
-
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImport("user32.dll")]
@@ -91,11 +93,19 @@ namespace Simple_Music_Player_2
                 rpcInitialised = true;
             }
             CleanupPlayback();
-            waveSource = CodecFactory.Instance.GetCodec(MusicData.queue[0]).ToSampleSource().ToWaveSource();
-            soundOut = new WasapiOut() { Latency = 100 };
+            var source = CodecFactory.Instance.GetCodec(MusicData.queue[0]);
+            var volumeSource = new VolumeSource(source.ToSampleSource());
+            var equalizer = Equalizer.Create10BandEqualizer(volumeSource);
+            waveSource = equalizer
+                    .ToStereo()
+                    .ChangeSampleRate(44100)
+                    .AppendSource(Equalizer.Create10BandEqualizer, out equalizer)
+                    .ToWaveSource(32);
+            if (WasapiOut.IsSupportedOnCurrentPlatform) soundOut = new WasapiOut() { Latency = 100 };
+            else soundOut = new DirectSoundOut();
             soundOut.Initialize(waveSource);
-            soundOut.Play();
             soundOut.Volume = MusicData.volume;
+            soundOut.Play();
             timer1.Start();
             setMetadata();
             setLabel();
@@ -105,12 +115,8 @@ namespace Simple_Music_Player_2
             setLabel();
             while (soundOut != null && (soundOut.PlaybackState == PlaybackState.Playing || soundOut.PlaybackState == PlaybackState.Paused))
             {
-                MusicData.posMs = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
-                volumeTrackBar.Value = soundOut != null ? Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0)) : 100;
-                trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
-                setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
                 Application.DoEvents();
-                Thread.Sleep(250);
+                Thread.Sleep(1);
             }
             if (soundOut != null && soundOut.PlaybackState == PlaybackState.Stopped)
             {
@@ -219,57 +225,6 @@ namespace Simple_Music_Player_2
             client = null;
             CleanupPlayback();
         }
-        private void PlayPause_Click(object sender, EventArgs e)
-        {
-            if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
-            {
-                timer1.Stop();
-                PlayPause.Image = Properties.Resources.pause;
-                soundOut.Pause();
-            }
-            else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
-            {
-                timer1.Start();
-                PlayPause.Image = Properties.Resources.play;
-                soundOut.Play();
-            }
-            titleText.Focus();
-        }
-        private void Stop_Click(object sender, EventArgs e)
-        {
-            MusicData.queue.RemoveRange(0, MusicData.queue.Count);
-            CleanupPlayback();
-            titleText.Focus();
-        }
-
-        private void Skip_Click(object sender, EventArgs e)
-        {
-            CleanupPlayback();
-            if (MusicData.queue.Count == 0) return;
-            if (MusicData.queue.Count() >= 1)
-            {
-                playMusic();
-                titleText.Focus();
-                return;
-            }
-            titleText.Focus();
-        }
-
-        private void Unskip_Click(object sender, EventArgs e)
-        {
-            if (MusicData.previous.Count >= 2)
-            {
-                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
-                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 2]);
-                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
-                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
-                CleanupPlayback();
-                playMusic();
-                titleText.Focus();
-                return;
-            }
-            titleText.Focus();
-        }
         private void volumeTrackBar_ValueChanged(object sender, EventArgs e)
         {
             if (soundOut != null)
@@ -277,7 +232,6 @@ namespace Simple_Music_Player_2
                 soundOut.Volume = Math.Min(1.0f, Math.Max(volumeTrackBar.Value / 100f, 0f));
                 MusicData.volume = soundOut.Volume;
             }
-            titleText.Focus();
         }
 
         private void timeTrackBar_ValueChanged(object sender, EventArgs e)
@@ -289,13 +243,15 @@ namespace Simple_Music_Player_2
                 System.Threading.Thread.Sleep(0);
                 soundOut.Play();
             }
-            titleText.Focus();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
             timeTrackBar.Maximum = (int)waveSource.Length;
             timeTrackBar.Value = (int)waveSource.Position;
-            titleText.Focus();
+            MusicData.posMs = waveSource.Position * 1000.0 / waveSource.WaveFormat.BitsPerSample / waveSource.WaveFormat.Channels * 8 / waveSource.WaveFormat.SampleRate;
+            volumeTrackBar.Value = Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0)) == volumeTrackBar.Value ? volumeTrackBar.Value : Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0));
+            trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
+            setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
         }
 
         private void viewQueueToolStripMenuItem_Click(object sender, EventArgs e)
@@ -314,17 +270,73 @@ namespace Simple_Music_Player_2
         }
         static void RunQueue()
         {
-           try
+            try
             {
                 Application.Run(new QueueForm());
-           }
-            catch (ArgumentOutOfRangeException){ }
+            }
+            catch (ArgumentOutOfRangeException) { }
         }
 
         private void shuffleQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MusicData.queue = MusicData.queue.OrderBy(x => Guid.NewGuid()).ToList();
-            MessageBox.Show("The queue has been shuffled!", "Shuffler", MessageBoxButtons.OK);
+            if (MusicData.queue.Count != 0)
+            {
+                MusicData.queue = MusicData.queue.OrderBy(x => Guid.NewGuid()).ToList();
+                MessageBox.Show("The queue has been shuffled!", "Shuffler", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Unskip_Click(object sender, MouseEventArgs e)
+        {
+            titleText.Focus();
+            if (MusicData.previous.Count >= 2)
+            {
+                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 1]);
+                MusicData.queue.Insert(0, MusicData.previous[MusicData.previous.Count - 2]);
+                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+                MusicData.previous.RemoveAt(MusicData.previous.Count - 1);
+                CleanupPlayback();
+                playMusic();
+            }
+        }
+
+        private void PlayPause_Click(object sender, MouseEventArgs e)
+        {
+            titleText.Focus();
+            if (soundOut != null && soundOut.PlaybackState == PlaybackState.Playing)
+            {
+                timer1.Stop();
+                PlayPause.Image = Properties.Resources.pause;
+                soundOut.Pause();
+            }
+            else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
+            {
+                timer1.Start();
+                PlayPause.Image = Properties.Resources.play;
+                soundOut.Play();
+            }
+        }
+
+        private void Skip_Click(object sender, MouseEventArgs e)
+        {
+            titleText.Focus();
+            CleanupPlayback();
+            if (MusicData.queue.Count == 0) return;
+            if (MusicData.queue.Count() >= 1)
+            {
+                playMusic();
+            }
+        }
+
+        private void Stop_Click(object sender, MouseEventArgs e)
+        {
+            titleText.Focus();
+            MusicData.queue.RemoveRange(0, MusicData.queue.Count);
+            CleanupPlayback();
         }
     }
 }
