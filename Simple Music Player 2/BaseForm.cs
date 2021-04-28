@@ -312,6 +312,7 @@ namespace Simple_Music_Player_2
                 timer1.Stop();
                 PlayPause.Image = Properties.Resources.pause;
                 soundOut.Pause();
+                setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
             }
             else if (soundOut != null && soundOut.PlaybackState == PlaybackState.Paused)
             {
