@@ -26,6 +26,7 @@ namespace Simple_Music_Player_2
         public static IWaveSource waveSource;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
+
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImport("user32.dll")]
@@ -252,7 +253,6 @@ namespace Simple_Music_Player_2
             volumeTrackBar.Value = Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0)) == volumeTrackBar.Value ? volumeTrackBar.Value : Math.Min(100, Math.Max((int)(MusicData.volume * 100), 0));
             trackTime.Text = TimeSpan.FromMilliseconds(MusicData.posMs).ToString(@"hh\:mm\:ss") + " \\ " + TimeSpan.FromMilliseconds(MusicData.totalMs).ToString(@"hh\:mm\:ss");
             setPresence(MusicData.title, MusicData.artist, MusicData.totalMs - MusicData.posMs, "logo", MusicData.album, soundOut.PlaybackState == PlaybackState.Playing ? true : false);
-
             relocatelabel(titleText);
             relocatelabel(artistText);
             relocatelabel(albumText);
@@ -267,10 +267,7 @@ namespace Simple_Music_Player_2
                 queueThread.Name = "Queue";
                 queueThread.Start();
             }
-            else
-            {
-                MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            else MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         static void RunQueue()
         {
@@ -288,10 +285,7 @@ namespace Simple_Music_Player_2
                 MusicData.queue = MusicData.queue.OrderBy(x => Guid.NewGuid()).ToList();
                 MessageBox.Show("The queue has been shuffled!", "Shuffler", MessageBoxButtons.OK);
             }
-            else
-            {
-                MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            else MessageBox.Show("There is no queue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Unskip_Click(object sender, MouseEventArgs e)
